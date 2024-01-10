@@ -7,13 +7,10 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    DATABASE_URL: z
-      .string()
-      .url()
-      .refine(
-        (str) => !str.includes("YOUR_MYSQL_URL_HERE"),
-        "You forgot to change the default URL"
-      ),
+    POSTGRES_PASSWORD: z.string().min(1),
+    POSTGRES_USER: z.string().min(1),
+    POSTGRES_DB: z.string().min(1),
+
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -33,7 +30,10 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    DATABASE_URL: process.env.DATABASE_URL,
+    POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
+    POSTGRES_USER: process.env.POSTGRES_USER,
+    POSTGRES_DB: process.env.POSTGRES_DB,
+
     NODE_ENV: process.env.NODE_ENV,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },

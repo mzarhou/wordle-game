@@ -1,12 +1,10 @@
 import { type Config } from "drizzle-kit";
-
-import { env } from "~/env";
+import { DATABASE_URL } from "~/server/db";
 
 export default {
   schema: "./src/server/db/schema.ts",
-  driver: "mysql2",
+  driver: "pg",
   dbCredentials: {
-    uri: env.DATABASE_URL,
+    connectionString: DATABASE_URL,
   },
-  tablesFilter: ["lendstack-wordle_*"],
 } satisfies Config;
