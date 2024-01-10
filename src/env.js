@@ -10,6 +10,7 @@ export const env = createEnv({
     POSTGRES_PASSWORD: z.string().min(1),
     POSTGRES_USER: z.string().min(1),
     POSTGRES_DB: z.string().min(1),
+    REDIS_PASSWORD: z.string().min(1),
 
     NODE_ENV: z
       .enum(["development", "test", "production"])
@@ -33,6 +34,7 @@ export const env = createEnv({
     POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
     POSTGRES_USER: process.env.POSTGRES_USER,
     POSTGRES_DB: process.env.POSTGRES_DB,
+    REDIS_PASSWORD: process.env.REDIS_PASSWORD,
 
     NODE_ENV: process.env.NODE_ENV,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,

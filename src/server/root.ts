@@ -1,13 +1,8 @@
-import { leaderboardRouter } from "./api/leaderboard";
+import { gameRouter } from "./api/game";
 import { createTRPCRouter } from "./trpc";
 
-/**
- * This is the primary router for your server.
- *
- * All routers added in /api/routers should be manually added here.
- */
 export const appRouter = createTRPCRouter({
-  leaderboard: leaderboardRouter,
+  game: gameRouter,
 });
 
 // export type definition of API
