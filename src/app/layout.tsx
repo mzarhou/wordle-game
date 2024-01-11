@@ -24,7 +24,7 @@ export default function RootLayout({
           <TRPCReactProvider cookies={cookies().toString()}>
             {children}
           </TRPCReactProvider>
-          <Toaster richColors />
+          <Toaster position={"top-center"} />
         </body>
       </html>
     </ClerkProvider>

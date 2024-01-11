@@ -12,6 +12,7 @@ import { RETRY_COUNT } from "~/config/game-config";
 import { protectedCurrentGameProcedure } from "./game.middleware";
 import { incrementUserScore } from "./game.repository";
 import { currentUser } from "@clerk/nextjs";
+import { WORDS } from "./game.data";
 
 export const gameRouter = createTRPCRouter({
   generateWord: protectedProcedure.mutation(async ({ ctx }) => {
@@ -38,6 +39,13 @@ export const gameRouter = createTRPCRouter({
     .input(wordValidator)
     .mutation(
       async ({ input, ctx: { userId, gameState: oldGameState, db } }) => {
+        if (!WORDS.includes(input.word)) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Word does not exists",
+          });
+        }
+
         try {
           const word = splitWordIntoLetters({
             input: input.word,
@@ -50,7 +58,7 @@ export const gameRouter = createTRPCRouter({
             // game end - win
             // game state `currentIndex` increment in the previous step
             const user = await currentUser();
-            if (!user?.username) throw new Error("");
+            if (!user?.username) throw new Error("Invalid user name");
             await incrementUserScore(db, {
               userId,
               username: user.username,

@@ -45,6 +45,7 @@ export function Game({ gameState }: { gameState: GameState }) {
     },
     onError: (error) => {
       toast.error(error.message);
+      setCurrentWord("");
     },
   });
 
