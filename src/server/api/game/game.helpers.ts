@@ -25,5 +25,7 @@ export function splitWordIntoLetters({
 
 export function getRandomWord() {
   const randomIndex = Math.floor(Math.random() * WORDS.length);
-  return WORDS[randomIndex]!;
+  const word = WORDS[randomIndex]!;
+  console.log({ randomeWord: word });
+  return word;
 }
