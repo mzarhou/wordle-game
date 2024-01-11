@@ -54,7 +54,7 @@ export function Game({ gameState }: { gameState: GameState }) {
     if (currentWord.length !== 5) {
       return toast("Word must contain 5 characters");
     }
-    submitWord({ word: currentWord });
+    submitWord({ word: currentWord.toLowerCase() });
   };
 
   return (

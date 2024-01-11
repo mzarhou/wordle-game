@@ -46,7 +46,7 @@ export const gameRouter = createTRPCRouter({
 
           const newGameState = await addNewWord(userId, word);
 
-          if (input.word.toLowerCase() === oldGameState.word.toLowerCase()) {
+          if (input.word === oldGameState.word) {
             // game end - win
             // game state `currentIndex` increment in the previous step
             const user = await currentUser();
