@@ -1,4 +1,5 @@
 import type { Letter } from "~/types/game-state.type";
+import { WORDS } from "./game.data";
 
 export function splitWordIntoLetters({
   input,
@@ -20,4 +21,9 @@ export function splitWordIntoLetters({
     }
   }
   return word;
+}
+
+export function getRandomWord() {
+  const randomIndex = Math.floor(Math.random() * WORDS.length);
+  return WORDS[randomIndex]!;
 }

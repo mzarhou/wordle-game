@@ -7,7 +7,7 @@ import {
   getGameState,
   setGameState,
 } from "./game.storage";
-import { splitWordIntoLetters } from "./game.helpers";
+import { getRandomWord, splitWordIntoLetters } from "./game.helpers";
 import { RETRY_COUNT } from "~/config/game-config";
 import { protectedCurrentGameProcedure } from "./game.middleware";
 import { incrementUserScore } from "./game.repository";
@@ -15,15 +15,13 @@ import { currentUser } from "@clerk/nextjs";
 
 export const gameRouter = createTRPCRouter({
   generateWord: protectedProcedure.mutation(async ({ ctx }) => {
-    // TODO: use random word
-    await generateNewGame(ctx.userId, "stone");
+    await generateNewGame(ctx.userId, getRandomWord());
   }),
 
   getGameState: protectedProcedure.query(async ({ ctx }) => {
     let gameState = await getGameState(ctx.userId);
     if (!gameState) {
-      // TODO: use random word
-      gameState = await generateNewGame(ctx.userId, "stone");
+      gameState = await generateNewGame(ctx.userId, getRandomWord());
     }
     return gameState.state;
   }),

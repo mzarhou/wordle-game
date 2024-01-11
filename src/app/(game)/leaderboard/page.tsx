@@ -13,7 +13,9 @@ export default async function LeaderBoard() {
   const users = await api.leaderboard.byScore.query({ limit: 10 });
   return (
     <Table className="mt-10">
-      <TableCaption>Leaderboard</TableCaption>
+      <TableCaption>
+        {users.length > 0 ? "Leaderboard" : "No user found"}
+      </TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>username</TableHead>
