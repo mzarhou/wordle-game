@@ -1,4 +1,4 @@
-import { gameRouter } from "./api/game";
+import { gameRouter } from "./api/game/game.router";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({

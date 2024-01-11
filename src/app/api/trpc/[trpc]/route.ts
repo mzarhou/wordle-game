@@ -1,7 +1,7 @@
 import { getAuth } from "@clerk/nextjs/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { type NextRequest } from "next/server";
-import { RequestLike } from "node_modules/@clerk/nextjs/dist/types/server/types";
+import type { RequestLike } from "node_modules/@clerk/nextjs/dist/types/server/types";
 
 import { env } from "~/env";
 import { appRouter } from "~/server/root";

@@ -33,7 +33,6 @@ export const createTRPCContext = async (opts: {
   return {
     ...opts,
     db,
-    userId: opts.auth.userId,
   };
 };
 
@@ -54,6 +53,11 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
         zodError:
           error.cause instanceof ZodError ? error.cause.flatten() : null,
       },
+      message:
+        error.cause instanceof ZodError
+          ? Object.values(error.cause.flatten().fieldErrors)[0]?.toString() ??
+            shape.message
+          : shape.message,
     };
   },
 });
@@ -85,9 +89,8 @@ const enforceUserIsAuthed = t.middleware(({ next, ctx }) => {
   if (!ctx.auth.userId) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
-  return next({
-    ctx: ctx.auth,
-  });
+
+  return next({ ctx: { userId: ctx.auth.userId } });
 });
 
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);

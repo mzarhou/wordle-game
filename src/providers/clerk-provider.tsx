@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { ClerkProvider as ClerkBaseProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 
