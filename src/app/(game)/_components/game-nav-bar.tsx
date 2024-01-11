@@ -25,7 +25,7 @@ export default function GameNavBar() {
           </TabsTrigger>
         </TabsList>
       </Tabs>
-      <UserButton />
+      <UserButton afterSignOutUrl="/" />
     </div>
   );
 }
