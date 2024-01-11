@@ -64,7 +64,10 @@ export function Game({ gameState }: { gameState: GameState }) {
         <div className="flex items-center justify-end">
           <ResetGame />
         </div>
-        <div className="grid grid-cols-5 gap-2 md:gap-4">
+        <div
+          className="grid grid-cols-5 gap-2 md:gap-4"
+          onClick={() => inputRef.current?.focus()}
+        >
           {Array(RETRY_COUNT)
             .fill(null)
             .map((_, index) => (

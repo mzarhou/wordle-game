@@ -17,8 +17,16 @@ describe("test splitWordIntoLetters helper", () => {
     expect(value?.[4]?.status).toBe("valid");
   });
 
-  test("should return null on invalid input", () => {
-    const value = splitWordIntoLetters({ input: "", expectedWord: "ajhed" });
-    expect(value).toBe(null);
+  test("should throw on invalid input", () => {
+    expect(() =>
+      splitWordIntoLetters({ input: "", expectedWord: "ajhed" }),
+    ).toThrow();
+  });
+
+  test("test spliteInput", () => {
+    const input = "total";
+    const letters = splitWordIntoLetters({ input, expectedWord: "atome" });
+    expect(letters?.[0]?.status).toBe("valid");
+    expect(letters?.[2]?.status).toBe("invalid");
   });
 });
