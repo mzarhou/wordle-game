@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { GameNavBar } from "./_sections";
+import GameNavBar from "./_components/game-nav-bar";
 
 export default function GameLayout({ children }: { children: ReactNode }) {
   return (

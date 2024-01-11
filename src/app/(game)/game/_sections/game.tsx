@@ -73,7 +73,7 @@ export function Game({ gameState }: { gameState: GameState }) {
 
         {gameState.end ? (
           <div className="flex justify-center">
-            <PlayAgainButton />
+            <PlayAgainButton className="mt-8" />
           </div>
         ) : (
           <form className="flex space-x-4" onSubmit={handleSubmit}>

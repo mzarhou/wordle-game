@@ -11,7 +11,7 @@ export function GameWordRow({ word }: { word: Letter[] | undefined }) {
           <div
             key={i}
             className={cn(
-              "flex aspect-square items-center justify-center rounded-lg border text-6xl transition-all duration-300 md:text-7xl",
+              "flex aspect-square items-center justify-center rounded-lg border text-4xl transition-all duration-300 md:text-6xl",
               {
                 "bg-primary": word?.[i]?.status === "correct",
                 "bg-secondary": word?.[i]?.status === "valid",

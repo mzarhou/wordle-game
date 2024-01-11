@@ -11,3 +11,5 @@ export const DATABASE_URL = `postgres://${env.POSTGRES_PASSWORD}:${
 const queryClient = postgres(DATABASE_URL);
 
 export const db = drizzle(queryClient, { schema });
+
+export type Database = typeof db;

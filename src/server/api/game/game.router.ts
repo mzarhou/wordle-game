@@ -10,6 +10,8 @@ import {
 import { splitWordIntoLetters } from "./game.helpers";
 import { RETRY_COUNT } from "~/config/game-config";
 import { protectedCurrentGameProcedure } from "./game.middleware";
+import { incrementUserScore } from "./game.repository";
+import { currentUser } from "@clerk/nextjs";
 
 export const gameRouter = createTRPCRouter({
   generateWord: protectedProcedure.mutation(async ({ ctx }) => {
@@ -36,29 +38,39 @@ export const gameRouter = createTRPCRouter({
 
   submitWord: protectedCurrentGameProcedure
     .input(wordValidator)
-    .mutation(async ({ input, ctx: { userId, gameState } }) => {
-      try {
-        const word = splitWordIntoLetters({
-          input: input.word,
-          expectedWord: gameState.word,
-        });
+    .mutation(
+      async ({ input, ctx: { userId, gameState: oldGameState, db } }) => {
+        try {
+          const word = splitWordIntoLetters({
+            input: input.word,
+            expectedWord: oldGameState.word,
+          });
 
-        const { state } = await addNewWord(userId, word);
+          const newGameState = await addNewWord(userId, word);
 
-        if (input.word.toLowerCase() === gameState.word.toLowerCase()) {
-          // game end - win
-          return await setGameState(userId, { end: true, won: true });
+          if (input.word.toLowerCase() === oldGameState.word.toLowerCase()) {
+            // game end - win
+            // game state `currentIndex` increment in the previous step
+            const user = await currentUser();
+            if (!user?.username) throw new Error("");
+            await incrementUserScore(db, {
+              userId,
+              username: user.username,
+              incrementBy: RETRY_COUNT - oldGameState.state.currentIndex,
+            });
+            return await setGameState(userId, { end: true, won: true });
+          }
+
+          if (newGameState.state.words.length >= RETRY_COUNT) {
+            // game end - lose
+            return await setGameState(userId, { end: true, won: false });
+          }
+        } catch (_error) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Something went wrong",
+          });
         }
-
-        if (state.words.length >= RETRY_COUNT) {
-          // game end - lose
-          return await setGameState(userId, { end: true, won: false });
-        }
-      } catch (_error) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Something went wrong",
-        });
-      }
-    }),
+      },
+    ),
 });
