@@ -7,7 +7,7 @@ import { ClerkProvider } from "~/providers";
 import { inter } from "~/styles/fonts";
 
 export const metadata = {
-  title: "LendStack wordle",
+  title: "Wordle Game",
   description: "",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
